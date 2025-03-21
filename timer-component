@@ -1,0 +1,104 @@
+· Create a component called Timer.
+
+· Use the useState hook to display the current time using Date().toLocaleTimeString().
+
+· Use the useEffect hook to update the time every second using setInterval.
+
+· Clean up the interval using the cleanup function inside useEffect.
+
+· Add a button to Start and Stop the timer.
+
+
+import React, { useState, useEffect } from 'react';
+
+
+const Timer = () => {
+
+const [time, setTime] = useState(new Date().toLocaleTimeString());
+
+const [isRunning, setIsRunning] = useState(false);
+
+let timerId;
+
+
+useEffect(() => {
+
+if (isRunning) {
+
+timerId = setInterval(() => {
+
+setTime(new Date().toLocaleTimeString());
+
+}, 1000);
+
+} else {
+
+clearInterval(timerId);
+
+}
+
+
+return () => clearInterval(timerId);
+
+}, [isRunning]);
+
+
+const toggleTimer = () => {
+
+setIsRunning((prevState) => !prevState);
+
+};
+
+
+return (
+
+<div>
+
+<h2>Current Time: {time}</h2>
+
+<button onClick={toggleTimer}>
+
+{isRunning ? 'Stop Timer' : 'Start Timer'}
+
+</button>
+
+</div>
+
+);
+
+};
+
+
+export default Timer;
+
+App.tsx
+
+import React from 'react';
+
+import Welcome from './Welcome';
+
+import Counter from './Counter';
+
+import Timer from './Timer';
+
+import SignupForm from './SignupForm';
+
+
+const App = () => {
+
+return (
+
+<div>
+
+
+
+<h1> Timer Component</h1>
+
+<Timer />
+
+
+</div>
+
+);
+
+};
