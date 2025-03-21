@@ -1,0 +1,74 @@
+· Create a functional component named Welcome that accepts a name as a prop.
+
+· Display a greeting message like "Hello, [name]!" using JSX.
+
+· Render this component inside App.js with different names.
+
+Add some basic styling using inline CSS.
+
+
+import React from 'react';
+
+
+const Welcome = ({ name }) => {
+
+const greetingStyle = {
+
+color: '#4CAF50',
+
+fontSize: '24px',
+
+fontWeight: 'bold',
+
+};
+
+
+return (
+
+<div style={greetingStyle}>
+
+<h1>Hello, {name}!</h1>
+
+</div>
+
+);
+
+};
+
+
+export default Welcome;
+
+
+
+
+export default App;
+
+App.tsx
+
+import React from 'react';
+
+import Welcome from './Welcome';
+
+
+const App = () => {
+
+return (
+
+<div>
+
+
+
+<h1> Welcome Component</h1>
+
+<Welcome name="Alice" />
+
+<Welcome name="Bob" />
+
+<Welcome name="Charlie" />
+
+
+</div>
+
+);
+
+}
