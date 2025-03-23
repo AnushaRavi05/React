@@ -1,0 +1,209 @@
+Build a Form with Form Validation
+
+
+ Create a functional component named SignupForm.
+
+Use useState to manage form data (name, email, and password).
+
+ Perform basic form validation:
+
+Ensure all fields are filled out.
+
+ Validate that the email is in a proper format.
+
+ Ensure the password is at least 8 characters long.
+
+ Display validation error messages.
+
+Show a success message on valid form submission.
+
+ Reset the form after submission.
+
+import React, { useState } from 'react';
+
+
+const Form = () => {
+
+const [formData, setFormData] = useState({
+
+name: '',
+email: '',
+
+password: '',
+
+});
+
+const [errors, setErrors] = useState({});
+
+const [successMessage, setSuccessMessage] = useState('');
+
+
+const validateForm = () => {
+
+let formErrors = {};
+
+let isValid = true;
+
+
+if (!formData.name) {
+
+formErrors.name = 'Name is required';
+
+isValid = false;
+
+}
+
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+if (!formData.email || !emailRegex.test(formData.email)) {
+
+formErrors.email = 'Please enter a valid email address';
+
+isValid = false;
+
+}
+
+if (!formData.password || formData.password.length < 8) {
+
+formErrors.password = 'Password must be at least 8 characters long';
+
+isValid = false;
+}
+
+
+setErrors(formErrors);
+
+return isValid;
+
+};
+
+
+const handleSubmit = (e) => {
+
+e.preventDefault();
+
+if (validateForm()) {
+
+setSuccessMessage('Form submitted successfully!');
+
+setFormData({ name: '', email: '', password: '' }); // Reset the form
+
+setErrors({}); // Clear errors
+
+}
+
+};
+const handleChange = (e) => {
+
+const { name, value } = e.target;
+
+setFormData((prevData) => ({ ...prevData, [name]: value }));
+
+};
+
+
+return (
+
+<div>
+<h2>Signup Form</h2>
+
+<form onSubmit={handleSubmit}>
+
+<div>
+
+<label>Name: </label>
+
+<input
+
+type="text"
+
+name="name"
+
+value={formData.name}
+
+onChange={handleChange}
+
+/>
+
+{errors.name && <p style={{ color: 'red' }}>{errors.name}</p>}
+
+</div>
+
+<div>
+
+<label>Email: </label>
+
+<input
+
+type="email"
+
+name="email"
+
+value={formData.email}
+
+onChange={handleChange}
+
+/>
+
+{errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+
+</div>
+<div>
+
+<label>Password: </label>
+
+<input
+
+type="password"
+
+name="password"
+
+value={formData.password}
+
+onChange={handleChange}
+
+/>
+
+{errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
+
+</div>
+
+<button type="submit">Submit</button>
+
+</form>
+
+
+{successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+
+</div>
+
+);
+
+};
+
+
+export default Form;
+
+
+App.tsx
+
+import React from 'react';
+import Form from './Form';
+
+
+const App = () => {
+
+return (
+
+<div>
+
+
+<h1> Signup Form</h1>
+
+<Form />
+
+</div>
+
+);
+
+};
